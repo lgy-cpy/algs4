@@ -88,7 +88,7 @@ public class SymbolGraph {
         while (!in.isEmpty()) {
             String[] a = in.readLine().split(delimiter);
             for (int i = 0; i < a.length; i++) {
-                if (!st.contains(a[i]))
+                if (!st.contains(a[i])) // 每一个字符串分配一个从0开始的下标
                     st.put(a[i], st.size());
             }
         }
@@ -105,7 +105,7 @@ public class SymbolGraph {
         in = new In(filename);
         while (in.hasNextLine()) {
             String[] a = in.readLine().split(delimiter);
-            int v = st.get(a[0]);
+            int v = st.get(a[0]); // 快速通过字符串找到顶点的下标
             for (int i = 1; i < a.length; i++) {
                 int w = st.get(a[i]);
                 graph.addEdge(v, w);

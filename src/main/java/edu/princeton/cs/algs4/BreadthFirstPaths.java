@@ -107,7 +107,7 @@ public class BreadthFirstPaths {
 
     // breadth-first search from a single source
     private void bfs(Graph G, int s) {
-        Queue<Integer> q = new Queue<Integer>();
+        Queue<Integer> q = new Queue<Integer>(); // 使用队列来保证先进入的先被处理
         for (int v = 0; v < G.V(); v++)
             distTo[v] = INFINITY;
         distTo[s] = 0;
@@ -115,13 +115,13 @@ public class BreadthFirstPaths {
         q.enqueue(s);
 
         while (!q.isEmpty()) {
-            int v = q.dequeue();
+            int v = q.dequeue();// Remove next vertex from the queue
             for (int w : G.adj(v)) {
-                if (!marked[w]) {
-                    edgeTo[w] = v;
+                if (!marked[w]) {// For every unmarked adjacent vertex,
+                    edgeTo[w] = v;// save last edge on a shortest path,
                     distTo[w] = distTo[v] + 1;
-                    marked[w] = true;
-                    q.enqueue(w);
+                    marked[w] = true;// mark it because path is known,
+                    q.enqueue(w);// and add it to the queue.
                 }
             }
         }

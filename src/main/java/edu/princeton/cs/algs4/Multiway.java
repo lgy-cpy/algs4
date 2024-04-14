@@ -45,19 +45,19 @@ public class Multiway {
     private Multiway() { }
 
     // merge together the sorted input streams and write the sorted result to standard output
-    private static void merge(In[] streams) {
+    private static void merge(In[] streams) { // 这里我们假设每一个都是从小到大的顺序，
         int n = streams.length;
         IndexMinPQ<String> pq = new IndexMinPQ<String>(n);
         for (int i = 0; i < n; i++)
             if (!streams[i].isEmpty())
-                pq.insert(i, streams[i].readString());
+                pq.insert(i, streams[i].readString()); // 这里每一个都只读第一个
 
         // Extract and print min and read next from its stream.
         while (!pq.isEmpty()) {
             StdOut.print(pq.minKey() + " ");
             int i = pq.delMin();
             if (!streams[i].isEmpty())
-                pq.insert(i, streams[i].readString());
+                pq.insert(i, streams[i].readString()); // 读取下一个，如果存在的话。因为每一个streams都是有序的，就不会造成顺序错误。
         }
         StdOut.println();
     }

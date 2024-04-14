@@ -92,7 +92,7 @@ public class LazyPrimMST {
         assert check(G);
     }
 
-    // run Prim's algorithm
+    // run Prim's algorithm 不是递归算法
     private void prim(EdgeWeightedGraph G, int s) {
         scan(G, s);
         while (!pq.isEmpty()) {                        // better to stop when mst has V-1 edges
@@ -102,7 +102,7 @@ public class LazyPrimMST {
             if (marked[v] && marked[w]) continue;      // lazy, both v and w already scanned
             mst.enqueue(e);                            // add e to MST
             weight += e.weight();
-            if (!marked[v]) scan(G, v);               // v becomes part of tree
+            if (!marked[v]) scan(G, v);               // v becomes part of tree 将刚加入树的顶点的所有连接点符合条件的加入最小堆
             if (!marked[w]) scan(G, w);               // w becomes part of tree
         }
     }
@@ -112,7 +112,7 @@ public class LazyPrimMST {
         assert !marked[v];
         marked[v] = true;
         for (Edge e : G.adj(v))
-            if (!marked[e.other(v)]) pq.insert(e);
+            if (!marked[e.other(v)]) pq.insert(e); // 另外一端尚未访问，将edge加入到最小堆
     }
 
     /**

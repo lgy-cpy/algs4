@@ -67,7 +67,7 @@ public class SeparateChainingHashST<Key, Value> {
     }
 
     // resize the hash table to have the given number of chains,
-    // rehashing all of the keys
+    // rehashing all of the keys (使用一个较大)
     private void resize(int chains) {
         SeparateChainingHashST<Key, Value> temp = new SeparateChainingHashST<Key, Value>(chains);
         for (int i = 0; i < m; i++) {

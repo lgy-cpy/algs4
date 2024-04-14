@@ -75,7 +75,7 @@ public class MergeX {
             return;
         }
         int mid = lo + (hi - lo) / 2;
-        sort(dst, src, lo, mid);
+        sort(dst, src, lo, mid); // 意味着src变成了有序的，这样最后一步排序的时候调用的是merge(src, dst, lo, mid, hi)
         sort(dst, src, mid+1, hi);
 
         // if (!less(src[mid+1], src[mid])) {
@@ -97,7 +97,7 @@ public class MergeX {
      * @param a the array to be sorted
      */
     public static void sort(Comparable[] a) {
-        Comparable[] aux = a.clone();
+        Comparable[] aux = a.clone(); // 复制一份
         sort(aux, a, 0, a.length-1);
         assert isSorted(a);
     }

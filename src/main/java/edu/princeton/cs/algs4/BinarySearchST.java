@@ -193,6 +193,7 @@ public class BinarySearchST<Key extends Comparable<Key>, Value> {
         int i = rank(key);
 
         // key is already in table
+        // 一定要先和n进行比较，以防所有已知数据都小于要插入的数据，此时i = n 如果调用keys[i]会过界
         if (i < n && keys[i].compareTo(key) == 0) {
             vals[i] = val;
             return;

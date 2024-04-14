@@ -112,7 +112,7 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements Iterable<Integer
         if (contains(i)) throw new IllegalArgumentException("index is already in the priority queue");
         n++;
         qp[i] = n;
-        pq[n] = i;
+        pq[n] = i; // 把索引i插入到pq的最后一个元素，而不是直接插入key
         keys[i] = key;
         swim(n);
     }
@@ -182,7 +182,7 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements Iterable<Integer
         validateIndex(i);
         if (!contains(i)) throw new NoSuchElementException("index is not in the priority queue");
         keys[i] = key;
-        swim(qp[i]);
+        swim(qp[i]); // 只会有一个方向，调用之后如果不用交换就会直接停止
         sink(qp[i]);
     }
 
@@ -267,15 +267,15 @@ public class IndexMinPQ<Key extends Comparable<Key>> implements Iterable<Integer
     * General helper functions.
     ***************************************************************************/
     private boolean greater(int i, int j) {
-        return keys[pq[i]].compareTo(keys[pq[j]]) > 0;
+        return keys[pq[i]].compareTo(keys[pq[j]]) > 0; // 比较的时候不是直接比较索引的大小，而是去keys中把值拿出来进行比较
     }
 
     private void exch(int i, int j) {
         int swap = pq[i];
         pq[i] = pq[j];
         pq[j] = swap;
-        qp[pq[i]] = i;
-        qp[pq[j]] = j;
+        qp[pq[i]] = i; // 先交换pq数组的位置，在改变qp中的值
+        qp[pq[j]] = j; // qp[pq[i]] = pq[qp[i]] = i
     }
 
 

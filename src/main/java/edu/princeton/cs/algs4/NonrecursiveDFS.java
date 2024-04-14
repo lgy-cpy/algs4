@@ -77,7 +77,7 @@ public class NonrecursiveDFS {
         // vertex in each adjacency list needs to be explored next
         Iterator<Integer>[] adj = (Iterator<Integer>[]) new Iterator[G.V()];
         for (int v = 0; v < G.V(); v++)
-            adj[v] = G.adj(v).iterator();
+            adj[v] = G.adj(v).iterator(); // 登记入口，之后遍历时候可以使用
 
         // depth-first search using an explicit stack
         Stack<Integer> stack = new Stack<Integer>();

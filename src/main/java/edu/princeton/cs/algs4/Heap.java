@@ -51,17 +51,17 @@ public class Heap {
      * Rearranges the array in ascending order, using the natural order.
      * @param pq the array to be sorted
      */
-    public static void sort(Comparable[] pq) {
+    public static void sort(Comparable[] pq) { // 1开始的数组
         int n = pq.length;
 
         // heapify phase
-        for (int k = n/2; k >= 1; k--)
+        for (int k = n/2; k >= 1; k--) // 从最后一个叶节点的父节点开始。每一个叶节点已经可以被看作是一个堆；
             sink(pq, k, n);
 
         // sortdown phase
         int k = n;
         while (k > 1) {
-            exch(pq, 1, k--);
+            exch(pq, 1, k--); // 不用额外占用空间。顶部的一定就是最大的，和最后一个交换。k--意味着最后一个元素是找出的元素，不再进行比较
             sink(pq, 1, k);
         }
     }

@@ -64,6 +64,23 @@ public class Selection {
         assert isSorted(a);
     }
 
+    public static void sort2(Comparable[] a) {
+        int n = a.length;
+        for (int i = 0; i < n; i++) {
+            int k = i;
+            for (int j = i + 1; j < n; j++) {
+                if (less(a[j], a[k])) {
+                    k = j;
+                }
+            }
+            if (k != i) {
+                exch(a, k, i);
+            }
+        }
+        assert isSorted(a);
+    }
+
+
     /**
      * Rearranges the array in ascending order, using a comparator.
      * @param a the array
@@ -150,8 +167,9 @@ public class Selection {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-        String[] a = StdIn.readAllStrings();
-        Selection.sort(a);
+        // String[] a = StdIn.readAllStrings();
+        String[] a = {"z", "d", "o", "a", "u"};
+        Selection.sort2(a);
         show(a);
     }
 }

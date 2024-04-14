@@ -73,7 +73,7 @@ public class CC {
      */
     public CC(Graph G) {
         marked = new boolean[G.V()];
-        id = new int[G.V()];
+        id = new int[G.V()];//初始值均为0
         size = new int[G.V()];
         for (int v = 0; v < G.V(); v++) {
             if (!marked[v]) {

@@ -107,7 +107,7 @@ public class BST<Key extends Comparable<Key>, Value> {
 
     // return number of key-value pairs in BST rooted at x
     private int size(Node x) {
-        if (x == null) return 0;
+        if (x == null) return 0; // 以防产生NPE
         else return x.size;
     }
 
@@ -161,7 +161,7 @@ public class BST<Key extends Comparable<Key>, Value> {
             delete(key);
             return;
         }
-        root = put(root, key, val);
+        root = put(root, key, val); // 实际上 root = 只在如果一开始是一棵空树的时候需要
         assert check();
     }
 
@@ -170,7 +170,7 @@ public class BST<Key extends Comparable<Key>, Value> {
         int cmp = key.compareTo(x.key);
         if      (cmp < 0) x.left  = put(x.left,  key, val);
         else if (cmp > 0) x.right = put(x.right, key, val);
-        else              x.val   = val;
+        else              x.val   = val; // 其实只有改变左右子树的情况下需要重新计算size
         x.size = 1 + size(x.left) + size(x.right);
         return x;
     }
@@ -229,15 +229,36 @@ public class BST<Key extends Comparable<Key>, Value> {
         if (x == null) return null;
 
         int cmp = key.compareTo(x.key);
-        if      (cmp < 0) x.left  = delete(x.left,  key);
+        if      (cmp < 0) x.left  = delete(x.left,  key); // 要删除的不是当前节点，而是左节点
         else if (cmp > 0) x.right = delete(x.right, key);
         else {
             if (x.right == null) return x.left;
             if (x.left  == null) return x.right;
+            Node t = x; // 保留当前的元素，因为需要保留左右的child，
+            x = min(t.right); // 找出右子树中最小的值，并且将它作为当前的root保存在x中，x是要被返回的
+            x.right = deleteMin(t.right); // 对于右子树，需要删除右子树中最小的值，并返回根节点
+            x.left = t.left; // 对于左子树，直接保留即可。
+        }
+        x.size = size(x.left) + size(x.right) + 1;
+        return x;
+    }
+
+    /*
+    use left side
+     */
+    private Node delete2(Node x, Key key) {
+        if (x == null) return null;
+        int cmp = key.compareTo(x.key);
+        if (cmp < 0) x.left = delete2(x.left, key);
+        else if (cmp > 0) {
+            x.right = delete2(x.right, key);
+        } else {
+            if (x.left == null) return x.right;
+            if (x.right == null) return x.left;
             Node t = x;
-            x = min(t.right);
-            x.right = deleteMin(t.right);
-            x.left = t.left;
+            x = max(t.left);
+            x.left = deleteMax(t.left);
+            x.right = t.right;
         }
         x.size = size(x.left) + size(x.right) + 1;
         return x;
@@ -296,8 +317,8 @@ public class BST<Key extends Comparable<Key>, Value> {
         if (x == null) return null;
         int cmp = key.compareTo(x.key);
         if (cmp == 0) return x;
-        if (cmp <  0) return floor(x.left, key);
-        Node t = floor(x.right, key);
+        if (cmp <  0) return floor(x.left, key); // 向左走到底
+        Node t = floor(x.right, key); // 向右走一步
         if (t != null) return t;
         else return x;
     }
@@ -312,7 +333,7 @@ public class BST<Key extends Comparable<Key>, Value> {
     private Key floor2(Node x, Key key, Key best) {
         if (x == null) return best;
         int cmp = key.compareTo(x.key);
-        if      (cmp  < 0) return floor2(x.left, key, best);
+        if      (cmp  < 0) return floor2(x.left, key, best);// 更好的贯彻了recursion的思路，将左右的不同抽象除了best这个定义
         else if (cmp  > 0) return floor2(x.right, key, x.key);
         else               return x.key;
     }

@@ -201,8 +201,8 @@ public class MaxPQ<Key> implements Iterable<Key> {
 
     private void sink(int k) {
         while (2*k <= n) {
-            int j = 2*k;
-            if (j < n && less(j, j+1)) j++;
+            int j = 2*k; // 指向左子树
+            if (j < n && less(j, j+1)) j++; // 右子树存在并且左子树小于右子树，指向右子树，这样可能保证交换后root的值一定大
             if (!less(k, j)) break;
             exch(k, j);
             k = j;

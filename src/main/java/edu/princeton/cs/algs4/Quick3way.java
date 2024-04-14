@@ -52,19 +52,19 @@ public class Quick3way {
     // quicksort the subarray a[lo .. hi] using 3-way partitioning
     private static void sort(Comparable[] a, int lo, int hi) {
         if (hi <= lo) return;
-        int lt = lo, gt = hi;
-        Comparable v = a[lo];
-        int i = lo + 1;
+        int lt = lo, gt = hi; // gt是待处理的上边界，gt的右边是大于的部分，所以是gt+1。lt是最靠近左边的相等的元素
+        Comparable v = a[lo]; // 这里用第一个元素作为基准，
+        int i = lo + 1; // 由于是第一个元素和基准相等，这里自动将指针移向下一个元素。
         while (i <= gt) {
             int cmp = a[i].compareTo(v);
-            if      (cmp < 0) exch(a, lt++, i++);
-            else if (cmp > 0) exch(a, i, gt--);
-            else              i++;
+            if      (cmp < 0) exch(a, lt++, i++); // 当前元素小于基准，则将左边界（最小边界）处的数值和当前元素交换，并且移动左边界. 移动之后的当前元素一定等于基准，所以自动将当前元素指向下一个元素
+            else if (cmp > 0) exch(a, i, gt--); // 当前元素大于基准，则将有边界 （最大边界）处的数值和当前元素交换，并且移动右边界。移动之后的当前元素已经发生变化并且数值不确定，所以当前元素不用改变
+            else              i++; // 当前元素等于基准，则只需要比较下一个元素
         }
 
         // a[lo..lt-1] < v = a[lt..gt] < a[gt+1..hi].
         sort(a, lo, lt-1);
-        sort(a, gt+1, hi);
+        sort(a, gt+1, hi); // i == gt + 1
         assert isSorted(a, lo, hi);
     }
 

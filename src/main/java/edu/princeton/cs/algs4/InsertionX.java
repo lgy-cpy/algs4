@@ -72,7 +72,7 @@ public class InsertionX {
         for (int i = 2; i < n; i++) {
             Comparable v = a[i];
             int j = i;
-            while (less(v, a[j-1])) {
+            while (j > 0 && less(v, a[j-1])) {
                 a[j] = a[j-1];
                 j--;
             }

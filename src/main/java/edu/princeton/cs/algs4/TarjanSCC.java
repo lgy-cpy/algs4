@@ -85,8 +85,10 @@ public class TarjanSCC {
         int min = low[v];
         stack.push(v);
         for (int w : G.adj(v)) {
-            if (!marked[w]) dfs(G, w);
-            if (low[w] < min) min = low[w];
+            if (!marked[w])
+                dfs(G, w);
+            if (low[w] < min)
+                min = low[w];
         }
         if (min < low[v]) {
             low[v] = min;
@@ -96,7 +98,7 @@ public class TarjanSCC {
         do {
             w = stack.pop();
             id[w] = count;
-            low[w] = G.V();
+            low[w] = G.V(); // 这家
         } while (w != v);
         count++;
     }
@@ -162,8 +164,14 @@ public class TarjanSCC {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-        In in = new In(args[0]);
-        Digraph G = new Digraph(in);
+//        In in = new In(args[0]);
+//        Digraph G = new Digraph(in);
+        Digraph G = new Digraph(5);
+        G.addEdge(0, 1);
+        G.addEdge(1, 2);
+        G.addEdge(3, 1);
+        G.addEdge(2, 3);
+        G.addEdge(3, 4);
         TarjanSCC scc = new TarjanSCC(G);
 
         // number of connected components

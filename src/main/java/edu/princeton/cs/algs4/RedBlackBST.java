@@ -204,7 +204,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
 
     // insert the key-value pair in the subtree rooted at h
     private Node put(Node h, Key key, Value val) {
-        if (h == null) return new Node(key, val, RED, 1);
+        if (h == null) return new Node(key, val, RED, 1); // 插入一个新的时候，都是红结点。
 
         int cmp = key.compareTo(h.key);
         if      (cmp < 0) h.left  = put(h.left,  key, val);
@@ -212,7 +212,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         else              h.val   = val;
 
         // fix-up any right-leaning links
-        if (isRed(h.right) && !isRed(h.left))      h = rotateLeft(h);
+        if (isRed(h.right) && !isRed(h.left))      h = rotateLeft(h); // 有
         if (isRed(h.left)  &&  isRed(h.left.left)) h = rotateRight(h);
         if (isRed(h.left)  &&  isRed(h.right))     flipColors(h);
         h.size = size(h.left) + size(h.right) + 1;
@@ -232,7 +232,8 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         if (isEmpty()) throw new NoSuchElementException("BST underflow");
 
         // if both children of root are black, set root to red
-        if (!isRed(root.left) && !isRed(root.right))
+        if (!isRed(root.left) && !isRed(root.right)) // 专门处理根节点的情况，有一种情况是根和根的两个子树都是2节点，这是把他变成一个四节点。
+            //
             root.color = RED;
 
         root = deleteMin(root);
@@ -243,7 +244,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
     // delete the key-value pair with the minimum key rooted at h
     private Node deleteMin(Node h) {
         if (h.left == null)
-            return null;
+            return null;// 意味着已经是最小的，删除即可
 
         if (!isRed(h.left) && !isRed(h.left.left))
             h = moveRedLeft(h);
@@ -384,7 +385,7 @@ public class RedBlackBST<Key extends Comparable<Key>, Value> {
         // assert isRed(h) && !isRed(h.left) && !isRed(h.left.left);
 
         flipColors(h);
-        if (isRed(h.right.left)) {
+        if (isRed(h.right.left)) {//只有是3节点，才可以移动一个却
             h.right = rotateRight(h.right);
             h = rotateLeft(h);
             flipColors(h);

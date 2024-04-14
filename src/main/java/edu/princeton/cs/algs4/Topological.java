@@ -83,10 +83,10 @@ public class Topological {
      * @param G the edge-weighted digraph
      */
     public Topological(EdgeWeightedDigraph G) {
-        EdgeWeightedDirectedCycle finder = new EdgeWeightedDirectedCycle(G);
+        EdgeWeightedDirectedCycle finder = new EdgeWeightedDirectedCycle(G); // 判断是否有cycle
         if (!finder.hasCycle()) {
-            DepthFirstOrder dfs = new DepthFirstOrder(G);
-            order = dfs.reversePost();
+            DepthFirstOrder dfs = new DepthFirstOrder(G);// 深度优先遍历，得到后序的结果
+            order = dfs.reversePost();// 将后序遍历的结果反向输出
         }
     }
 

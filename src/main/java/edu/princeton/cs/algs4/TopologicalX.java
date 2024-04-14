@@ -68,7 +68,7 @@ public class TopologicalX {
             int v = queue.dequeue();
             order.enqueue(v);
             ranks[v] = count++;
-            for (int w : G.adj(v)) {
+            for (int w : G.adj(v)) {// 拿出一个节点之后，相当与从图里删除该节点，所有相关的indegree都要降1，如果发现降了之后indegree为0，将其加入队列
                 indegree[w]--;
                 if (indegree[w] == 0) queue.enqueue(w);
             }

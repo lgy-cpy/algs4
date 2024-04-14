@@ -85,13 +85,13 @@ public class QuickBentleyMcIlroy {
                 if (j == lo) break;
 
             // pointers cross
-            if (i == j && eq(a[i], v))
+            if (i == j && eq(a[i], v)) // 考虑交会并且相等的情况
                 exch(a, ++p, i);
             if (i >= j) break;
 
             exch(a, i, j);
-            if (eq(a[i], v)) exch(a, ++p, i);
-            if (eq(a[j], v)) exch(a, --q, j);
+            if (eq(a[i], v)) exch(a, ++p, i); // 处理左侧相等的情况，p是表示在p左侧的都是相等的部分
+            if (eq(a[j], v)) exch(a, --q, j); // 处理右侧相当的情况，q是表示在q右侧的都是相等的部分
         }
 
 

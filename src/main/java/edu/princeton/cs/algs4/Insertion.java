@@ -68,6 +68,32 @@ public class Insertion {
         assert isSorted(a);
     }
 
+    public static void sort3(Comparable[] a) {
+        int n = a.length;
+        int step = 1;
+        for (int i = step; i < n; i++) {
+            for (int j = i; j >= step && less(a[j], a[j-step]); j -= step) {
+                exch(a, j, j-step);
+            }
+            assert isSorted(a, 0, i);
+        }
+        assert isSorted(a);
+    }
+
+    public static void sort2(Comparable[] a) {
+        int n = a.length;
+        for (int i = 1; i < n; i++) {
+            Comparable temp = a[i];
+            int j = i;
+            while (j > 0 && less(temp, a[j - 1])) {
+                a[j] = a[j - 1]; // shift
+                j--;
+            }
+            a[j] = temp;
+        }
+    }
+
+
     /**
      * Rearranges the subarray a[lo..hi) in ascending order, using the natural order.
      * @param a the array to be sorted
@@ -204,8 +230,8 @@ public class Insertion {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-        String[] a = StdIn.readAllStrings();
-        Insertion.sort(a);
+        String[] a = {"z", "d", "o", "a", "u"};
+        Insertion.sort2(a);
         show(a);
     }
 }

@@ -73,6 +73,35 @@ public class Merge {
         assert isSorted(a, lo, hi);
     }
 
+    private static void merge2(Comparable[] a, Comparable[] aux, int lo, int mid, int hi) {
+        // precondition: a[lo .. mid] and a[mid+1 .. hi] are sorted subarrays
+        assert isSorted(a, lo, mid);
+        assert isSorted(a, mid+1, hi);
+
+        // copy to aux[]
+        for (int k = lo; k <= hi; k++) {
+            aux[k] = a[k];
+        }
+
+        int i = lo;
+        int j = mid + 1;
+        // merge back to a[]
+        for (int k = lo; k<=hi; k++) {
+            if (i > mid) {
+                a[k] = aux[j++];
+            } else if (j > hi) {
+                a[k] = aux[i++];
+            } else if (less(a[j], a[i])) { // 为了保证顺序不变，这一步很重要
+                a[k] = aux[j++];
+            } else {
+                a[k] = aux[i++];
+            }
+        }
+
+        // postcondition: a[lo .. hi] is sorted
+        assert isSorted(a, lo, hi);
+    }
+
     // mergesort a[lo..hi] using auxiliary array aux[lo..hi]
     private static void sort(Comparable[] a, Comparable[] aux, int lo, int hi) {
         if (hi <= lo) return;

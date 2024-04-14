@@ -73,7 +73,7 @@ public class DepthFirstPaths {
         marked[v] = true;
         for (int w : G.adj(v)) {
             if (!marked[w]) {
-                edgeTo[w] = v;
+                edgeTo[w] = v; // v是当前节点w前的一个点，在初始化的过程记录; 利用树的原理，一个节点只能有一个根，因为只能mark一次
                 dfs(G, w);
             }
         }
@@ -87,7 +87,7 @@ public class DepthFirstPaths {
      */
     public boolean hasPathTo(int v) {
         validateVertex(v);
-        return marked[v];
+        return marked[v]; //
     }
 
     /**

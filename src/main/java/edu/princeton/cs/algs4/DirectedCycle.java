@@ -86,7 +86,7 @@ public class DirectedCycle {
                 assert check();
             }
         }
-        onStack[v] = false;
+        onStack[v] = false; // 非常重要，因为要从adj的下一个进行遍历，
     }
 
     /**

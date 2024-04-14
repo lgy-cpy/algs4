@@ -150,13 +150,13 @@ public class LinearProbingHashST<Key, Value> {
         if (n >= m/2) resize(2*m);
 
         int i;
-        for (i = hash(key); keys[i] != null; i = (i + 1) % m) {
-            if (keys[i].equals(key)) {
-                vals[i] = val;
+        for (i = hash(key); keys[i] != null; i = (i + 1) % m) { // 从哈希值开始计算, 如果存在，进入循环。
+            if (keys[i].equals(key)) { // 存在有两种情况，一种是找到了，在keys的列表里的相应位置寻找
+                vals[i] = val; // 找到了，更新值
                 return;
-            }
+            }// 没找到，继续下一个
         }
-        keys[i] = key;
+        keys[i] = key;// 如果不存在，跳出循环。就直接赋值即可。
         vals[i] = val;
         n++;
     }
@@ -199,14 +199,14 @@ public class LinearProbingHashST<Key, Value> {
 
         // rehash all keys in same cluster
         i = (i + 1) % m;
-        while (keys[i] != null) {
+        while (keys[i] != null) { // 删除之后，要把之后连续的key value 重置
             // delete keys[i] an vals[i] and reinsert
             Key   keyToRehash = keys[i];
             Value valToRehash = vals[i];
             keys[i] = null;
             vals[i] = null;
             n--;
-            put(keyToRehash, valToRehash);
+            put(keyToRehash, valToRehash); //
             i = (i + 1) % m;
         }
 
