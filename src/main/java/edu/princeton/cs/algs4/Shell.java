@@ -60,7 +60,9 @@ public class Shell {
 
         while (h >= 1) {
             // h-sort the array
+          // 这里隐含了一些子序列。但是又不是按照每一个子序列进行排序。
             for (int i = h; i < n; i++) {
+              // 对于每一个元素都要进行比较，移动，但是都只是在隐含的子序列中
                 for (int j = i; j >= h && less(a[j], a[j-h]); j -= h) {
                     exch(a, j, j-h);
                 }

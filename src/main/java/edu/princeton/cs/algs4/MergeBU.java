@@ -75,9 +75,9 @@ public class MergeBU {
     public static void sort(Comparable[] a) {
         int n = a.length;
         Comparable[] aux = new Comparable[n];
-        for (int len = 1; len < n; len *= 2) {
+        for (int len = 1; len < n; len *= 2) { // 要合并的最小的元素的长度为1，最大也要比总长度小
             for (int lo = 0; lo < n-len; lo += len+len) {
-                int mid  = lo+len-1;
+                int mid  = lo+len-1; // 中间元素过界不会造成问题，所以不需要去较小值
                 int hi = Math.min(lo+len+len-1, n-1);
                 merge(a, aux, lo, mid, hi);
             }
